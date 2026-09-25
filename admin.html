@@ -55,14 +55,13 @@
     th { background: #f1f5f9; font-size: 0.85rem; text-transform: uppercase; color: #64748b; }
     .actions { display: flex; gap: 6px; align-items: center; }
   </style>
-  <!-- Firebase App and Realtime Database SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>ðŸ› ï¸„1¤7 Admin Inventory Control</h1>
+      <h1>🛠️ Admin Inventory Control</h1>
       <a href="index.html" class="nav-link">&larr; Open User Catalog</a>
     </header>
 
@@ -95,33 +94,26 @@
   </div>
 
   <script>
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyBkMiak1gDsTaP22FBMYmTh7kwHnne1NIM",
-
-authDomain: "inventory-tracker-a6d75.firebaseapp.com",
-
-projectId: "inventory-tracker-a6d75",
-
-storageBucket: "inventory-tracker-a6d75.firebasestorage.app",
-
-messagingSenderId: "498199087966",
-
-appId: "1:498199087966:web:e5d1d6454343d384091dcf"
-
-};
-
-
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkMiak1gDsTaP22FBMYmTh7kwHnne1NIM",
+      authDomain: "inventory-tracker-a6d75.firebaseapp.com",
+      databaseURL: "https://inventory-tracker-a6d75-default-rtdb.firebaseio.com",
+      projectId: "inventory-tracker-a6d75",
+      storageBucket: "inventory-tracker-a6d75.firebasestorage.app",
+      messagingSenderId: "498199087966",
+      appId: "1:498199087966:web:e5d1d6454343d384091dcf"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     let currentData = {};
 
-    // Realtime sync from Firebase
     db.ref("inventory").on("value", (snapshot) => {
       currentData = snapshot.val() || {};
       renderAdminTable();
+    }, (error) => {
+      console.error(error);
+      alert("Firebase connection error: Check your database URL and Rules.");
     });
 
     function handleAddItem(e) {
@@ -132,23 +124,23 @@ appId: "1:498199087966:web:e5d1d6454343d384091dcf"
       const qty = parseInt(document.getElementById("qty").value, 10);
       const unit = document.getElementById("unit").value.trim();
 
-      // Check if SKU exists
       const exists = Object.values(currentData).some(item => (item.id || '').toLowerCase() === sku.toLowerCase());
       if (exists) {
         alert("An item with this SKU already exists!");
         return;
       }
 
-      // Push to Firebase
       db.ref("inventory").push({
         id: sku,
         name: name,
         category: category,
         qty: qty,
         unit: unit
+      }).then(() => {
+        document.getElementById("addItemForm").reset();
+      }).catch((err) => {
+        alert("Error saving: " + err.message);
       });
-
-      document.getElementById("addItemForm").reset();
     }
 
     function promptAdjust(key, isIssue) {
@@ -189,7 +181,7 @@ appId: "1:498199087966:web:e5d1d6454343d384091dcf"
             <button class="btn-danger" onclick="promptAdjust('${key}', true)">- Issue</button>
           </td>
           <td>
-            <button style="background: none; border: none; cursor: pointer; color: #ef4444;" onclick="deleteItem('${key}', '${item.id}')">ðŸ—‘ï¸„1¤7 Delete</button>
+            <button style="background: none; border: none; cursor: pointer; color: #ef4444;" onclick="deleteItem('${key}', '${item.id}')">🗑️ Delete</button>
           </td>
         `;
         tbody.appendChild(row);
@@ -198,5 +190,3 @@ appId: "1:498199087966:web:e5d1d6454343d384091dcf"
   </script>
 </body>
 </html>
-
-
