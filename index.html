@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock Inventory | Live Viewer</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+      --low-stock: #ef4444;
+      --in-stock: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 20px; }
+    .container { max-width: 900px; margin: auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    h1 { font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
+    .live-dot { width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .controls { margin-bottom: 16px; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+    .table-container {
+      background: var(--card);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+    th { background: #f1f5f9; font-size: 0.85rem; text-transform: uppercase; color: #64748b; }
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .in-stock { background: #d1fae5; color: #065f46; }
+    .low-stock { background: #fee2e2; color: #991b1b; }
+    .empty-state { text-align: center; padding: 40px; color: #94a3b8; }
+  </style>
+  <!-- Firebase App and Realtime Database SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><span class="live-dot"></span> Stock Inventory</h1>
+      <small style="color: #64748b;">Live Cloud Sync</small>
+    </header>
+
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search item name, SKU, or category..." oninput="renderTable()" />
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU / Code</th>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Available Qty</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryBody"></tbody>
+      </table>
+      <div id="noData" class="empty-state">Loading stock from cloud...</div>
+    </div>
+  </div>
+
+  <script>
+    
+<script type="module">
+
+// Import the functions you need from the SDKs you need
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+// TODO: Add SDKs for Firebase products that you want to use
+
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBkMiak1gDsTaP22FBMYmTh7kwHnne1NIM",
+
+authDomain: "inventory-tracker-a6d75.firebaseapp.com",
+
+projectId: "inventory-tracker-a6d75",
+
+storageBucket: "inventory-tracker-a6d75.firebasestorage.app",
+
+messagingSenderId: "498199087966",
+
+appId: "1:498199087966:web:e5d1d6454343d384091dcf"
+
+};
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+</script>
+
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    let inventoryData = {};
+
+    // Listen to real-time updates across all devices
+    db.ref("inventory").on("value", (snapshot) => {
+      inventoryData = snapshot.val() || {};
+      renderTable();
+    });
+
+    function renderTable() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const tbody = document.getElementById("inventoryBody");
+      const noData = document.getElementById("noData");
+      tbody.innerHTML = "";
+
+      const items = Object.entries(inventoryData).map(([key, value]) => ({
+        dbKey: key,
+        ...value
+      }));
+
+      const filtered = items.filter(item => 
+        (item.name || "").toLowerCase().includes(query) || 
+        (item.id || "").toLowerCase().includes(query) ||
+        (item.category || "").toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        noData.innerText = "No inventory items found.";
+        noData.style.display = "block";
+        return;
+      }
+      noData.style.display = "none";
+
+      filtered.forEach(item => {
+        const isLow = item.qty <= 5;
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><strong>${item.id}</strong></td>
+          <td>${item.name}</td>
+          <td>${item.category}</td>
+          <td><strong>${item.qty}</strong> <small>${item.unit || ''}</small></td>
+          <td>
+            <span class="badge ${isLow ? 'low-stock' : 'in-stock'}">
+              ${isLow ? 'Low Stock' : 'In Stock'}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>
+
+
