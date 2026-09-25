@@ -50,15 +50,17 @@
     .low-stock { background: #fee2e2; color: #991b1b; }
     .empty-state { text-align: center; padding: 40px; color: #94a3b8; }
   </style>
-  <!-- Firebase App and Realtime Database SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1><span class="live-dot"></span> Stock Inventory</h1>
-      <small style="color: #64748b;">Live Cloud Sync</small>
+      <div>
+        <h1><span class="live-dot"></span> Stock Inventory</h1>
+        <small style="color: #64748b;">Live Cloud Sync</small>
+      </div>
+      <a href="admin.html" style="text-decoration: none; background: var(--primary); color: #fff; padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">Admin Panel &rarr;</a>
     </header>
 
     <div class="controls">
@@ -82,33 +84,27 @@
     </div>
   </div>
 
-  <script/>
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyBkMiak1gDsTaP22FBMYmTh7kwHnne1NIM",
-
-authDomain: "inventory-tracker-a6d75.firebaseapp.com",
-
-projectId: "inventory-tracker-a6d75",
-
-storageBucket: "inventory-tracker-a6d75.firebasestorage.app",
-
-messagingSenderId: "498199087966",
-
-appId: "1:498199087966:web:e5d1d6454343d384091dcf"
-
-};
-
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBkMiak1gDsTaP22FBMYmTh7kwHnne1NIM",
+      authDomain: "inventory-tracker-a6d75.firebaseapp.com",
+      databaseURL: "https://inventory-tracker-a6d75-default-rtdb.firebaseio.com",
+      projectId: "inventory-tracker-a6d75",
+      storageBucket: "inventory-tracker-a6d75.firebasestorage.app",
+      messagingSenderId: "498199087966",
+      appId: "1:498199087966:web:e5d1d6454343d384091dcf"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     let inventoryData = {};
 
-    // Listen to real-time updates across all devices
     db.ref("inventory").on("value", (snapshot) => {
       inventoryData = snapshot.val() || {};
       renderTable();
+    }, (error) => {
+      console.error(error);
+      document.getElementById("noData").innerText = "Firebase Permission Error: Check Database Rules in Firebase Console.";
     });
 
     function renderTable() {
@@ -155,5 +151,3 @@ appId: "1:498199087966:web:e5d1d6454343d384091dcf"
   </script>
 </body>
 </html>
-
-
