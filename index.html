@@ -2,86 +2,309 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stock Inventory | Live Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Hindustan Rubber Products | Dashboard</title>
   <style>
     :root {
-      --primary: #2563eb;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --border: #e2e8f0;
-      --low-stock: #ef4444;
+      --primary: #1e3a8a;
+      --accent: #2563eb;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --surface: #334155;
+      --text: #f8fafc;
+      --subtext: #94a3b8;
       --in-stock: #10b981;
+      --low-stock: #ef4444;
+      --border: #334155;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 20px; }
-    .container { max-width: 900px; margin: auto; }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    h1 { font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
-    .live-dot { width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    .controls { margin-bottom: 16px; }
-    input[type="text"] {
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
       width: 100%;
-      padding: 12px 16px;
+      height: 100dvh;
+      overflow: hidden;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    .app-viewport {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 16px;
+      gap: 12px;
+    }
+
+    header {
+      text-align: center;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--subtext);
+      margin-top: 2px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .category-section {
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      outline: none;
+      border-radius: 16px;
+      padding: 14px 12px 10px;
+      position: relative;
+      background: rgba(30, 41, 59, 0.4);
     }
-    .table-container {
-      background: var(--card);
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      overflow-x: auto;
-    }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
-    th { background: #f1f5f9; font-size: 0.85rem; text-transform: uppercase; color: #64748b; }
-    .badge {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 9999px;
+
+    .category-legend {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg);
+      padding: 0 10px;
       font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      justify-items: center;
+      margin-top: 4px;
+    }
+
+    .cat-btn {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #3b82f6, #1d4ed8);
+      border: 3px solid transparent;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .cat-btn:active {
+      transform: scale(0.93);
+    }
+
+    .cat-btn.active {
+      background: radial-gradient(circle at 30% 30%, #38bdf8, #0284c7);
+      border-color: #ffffff;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
+      transform: scale(1.03);
+    }
+
+    .cat-btn span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    .table-container {
+      flex: 1;
+      min-height: 0;
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .table-header-block {
+      padding: 10px 14px;
+      background: #111827;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .selected-category-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .table-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #1e293b;
+      padding: 10px 14px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--subtext);
+      border-bottom: 1px solid var(--border);
+      z-index: 1;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.9rem;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rubber-name {
+      font-weight: 600;
+      color: #ffffff;
+      display: block;
+    }
+
+    .qty-cell {
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .unit-badge {
+      font-size: 0.8rem;
+      color: var(--subtext);
+      font-weight: 500;
+    }
+
+    .empty-state {
+      padding: 28px 14px;
+      text-align: center;
+      color: var(--subtext);
+      font-size: 0.85rem;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 4px;
+    }
+
+    .live-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--subtext);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--in-stock);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .admin-link {
+      font-size: 0.75rem;
+      color: #60a5fa;
+      text-decoration: none;
       font-weight: 600;
     }
-    .in-stock { background: #d1fae5; color: #065f46; }
-    .low-stock { background: #fee2e2; color: #991b1b; }
-    .empty-state { text-align: center; padding: 40px; color: #94a3b8; }
   </style>
+
+  <!-- Firebase Compatibility SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
-  <div class="container">
+  <div class="app-viewport">
     <header>
-      <div>
-        <h1><span class="live-dot"></span> Stock Inventory</h1>
-        <small style="color: #64748b;">Live Cloud Sync</small>
-      </div>
-      <a href="admin.html" style="text-decoration: none; background: var(--primary); color: #fff; padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">Admin Panel &rarr;</a>
+      <h1>Hindustan Rubber Products</h1>
+      <div class="subtitle">Stock Material - Dashboard</div>
     </header>
 
-    <div class="controls">
-      <input type="text" id="searchInput" placeholder="Search item name, SKU, or category..." oninput="renderTable()" />
+    <div class="category-section">
+      <div class="category-legend">Category</div>
+      <div class="category-grid">
+        <button type="button" class="cat-btn active" data-category="Polymer" onclick="selectCategory('Polymer')">
+          <span>Polymer</span>
+        </button>
+        <button type="button" class="cat-btn" data-category="Chemical" onclick="selectCategory('Chemical')">
+          <span>Chemical</span>
+        </button>
+        <button type="button" class="cat-btn" data-category="Filler" onclick="selectCategory('Filler')">
+          <span>Filler</span>
+        </button>
+        <button type="button" class="cat-btn" data-category="Oil" onclick="selectCategory('Oil')">
+          <span>Oil</span>
+        </button>
+      </div>
     </div>
 
     <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>SKU / Code</th>
-            <th>Item Name</th>
-            <th>Category</th>
-            <th>Available Qty</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="inventoryBody"></tbody>
-      </table>
-      <div id="noData" class="empty-state">Loading stock from cloud...</div>
+      <div class="table-header-block">
+        <div class="selected-category-title" id="activeCategoryName">Polymer Stock</div>
+      </div>
+      <div class="table-scroll-area">
+        <table>
+          <thead>
+            <tr>
+              <th>Rubber Name</th>
+              <th>Qty</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryRows"></tbody>
+        </table>
+        <div id="noDataMessage" class="empty-state">Connecting to cloud database...</div>
+      </div>
     </div>
+
+    <footer>
+      <div class="live-status">
+        <span class="status-dot"></span>
+        <span>Cloud Synced</span>
+      </div>
+      <a href="admin.html" class="admin-link">Admin Dispatch &rarr;</a>
+    </footer>
   </div>
 
   <script>
@@ -97,53 +320,58 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    let inventoryData = {};
+
+    let allInventory = {};
+    let currentSelectedCategory = "Polymer";
 
     db.ref("inventory").on("value", (snapshot) => {
-      inventoryData = snapshot.val() || {};
-      renderTable();
+      allInventory = snapshot.val() || {};
+      renderCategoryTable();
     }, (error) => {
       console.error(error);
-      document.getElementById("noData").innerText = "Firebase Permission Error: Check Database Rules in Firebase Console.";
+      document.getElementById("noDataMessage").innerText = "Database connection error.";
     });
 
-    function renderTable() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      const tbody = document.getElementById("inventoryBody");
-      const noData = document.getElementById("noData");
+    function selectCategory(categoryName) {
+      currentSelectedCategory = categoryName;
+
+      document.querySelectorAll(".cat-btn").forEach((btn) => {
+        if (btn.getAttribute("data-category") === categoryName) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+
+      document.getElementById("activeCategoryName").innerText = categoryName + " Stock";
+      renderCategoryTable();
+    }
+
+    function renderCategoryTable() {
+      const tbody = document.getElementById("inventoryRows");
+      const noDataMessage = document.getElementById("noDataMessage");
       tbody.innerHTML = "";
 
-      const items = Object.entries(inventoryData).map(([key, value]) => ({
-        dbKey: key,
-        ...value
-      }));
+      const rawItems = Object.values(allInventory);
 
-      const filtered = items.filter(item => 
-        (item.name || "").toLowerCase().includes(query) || 
-        (item.id || "").toLowerCase().includes(query) ||
-        (item.category || "").toLowerCase().includes(query)
-      );
+      const filtered = rawItems.filter((item) => {
+        return (item.category || "").trim().toLowerCase() === currentSelectedCategory.toLowerCase();
+      });
 
       if (filtered.length === 0) {
-        noData.innerText = "No inventory items found.";
-        noData.style.display = "block";
+        noDataMessage.innerText = `No items found under ${currentSelectedCategory}.`;
+        noDataMessage.style.display = "block";
         return;
       }
-      noData.style.display = "none";
 
-      filtered.forEach(item => {
-        const isLow = item.qty <= 5;
+      noDataMessage.style.display = "none";
+
+      filtered.forEach((item) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td><strong>${item.id}</strong></td>
-          <td>${item.name}</td>
-          <td>${item.category}</td>
-          <td><strong>${item.qty}</strong> <small>${item.unit || ''}</small></td>
-          <td>
-            <span class="badge ${isLow ? 'low-stock' : 'in-stock'}">
-              ${isLow ? 'Low Stock' : 'In Stock'}
-            </span>
-          </td>
+          <td><span class="rubber-name">${item.name || "-"}</span></td>
+          <td class="qty-cell">${item.qty ?? 0}</td>
+          <td><span class="unit-badge">${item.unit || "Kg"}</span></td>
         `;
         tbody.appendChild(row);
       });
