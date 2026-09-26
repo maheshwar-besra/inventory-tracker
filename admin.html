@@ -17,19 +17,90 @@
       --danger: #ef4444;
       --input-bg: #09090b;
     }
+  /* Base Reset */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 
+  *::-webkit-scrollbar {
+    display: none; /* Hide scrollbars for Safari and Chrome */
+  }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+   html, body{touch-action: none; /* Prevents pull-to-refresh and bounce gestures */
+    -webkit-text-size-adjust: none !important;
+    text-size-adjust: none !important;
+    -moz-text-size-adjust: none !important;
+    -ms-text-size-adjust: none !important;
+  }
     body { background-color: var(--bg); color: var(--text-main); min-height: 100dvh; display: flex; flex-direction: column; }
     .container { max-width: 800px; margin: 0 auto; padding: 24px 20px; width: 100%; }
 
     /* LOGIN SCREEN */
     #loginScreen { position: fixed; inset: 0; background-color: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-    .login-box { background: var(--surface); border: 1px solid var(--border); padding: 32px 24px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; }
-    .login-box h2 { margin-bottom: 24px; font-weight: 800; }
+    
+    .login-box { 
+      background: var(--surface); 
+      border: 1px solid var(--border); 
+      padding: 32px 24px; 
+      border-radius: 16px; 
+      width: 100%; 
+      max-width: 400px; 
+      text-align: center; 
+      position: relative; /* For absolute positioning of close button */
+    }
+
+    .login-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    
+    .login-close-btn:hover { background: var(--surface-elevated); color: var(--text-main); }
+
+    .login-box h2 { margin-bottom: 24px; font-weight: 800; margin-top: 8px; }
     .login-box input[type="password"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 16px; outline: none; }
     .login-box input[type="password"]:focus { border-color: var(--accent); }
-    .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; color: var(--text-sub); font-size: 0.9rem; cursor: pointer; justify-content: center; }
+    
+    .checkbox-container { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      margin-bottom: 24px; 
+      color: var(--text-sub); 
+      font-size: 0.9rem; 
+      cursor: pointer; 
+      justify-content: flex-start; /* Aligned left */
+      white-space: nowrap; /* Forces single line */
+    }
+    
     .login-btn { width: 100%; padding: 14px; border: none; border-radius: 8px; background: var(--accent); color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; }
+
+    /* CONTACT SECTION IN LOGIN */
+    .contact-section { margin-top: 28px; border-top: 1px solid var(--border); padding-top: 20px; }
+    .contact-header { font-size: 0.8rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px; }
+    .contact-buttons { display: flex; justify-content: space-around; align-items: center; padding: 0 10px; }
+    .dev-action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
+    .icon-circle { width: 48px; height: 48px; border-radius: 50%; background: #20242a; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .dev-action-btn:active .icon-circle { background: #2d333b; }
+    .icon-circle svg { width: 22px; height: 22px; fill: #ffffff; }
+    .dev-action-btn > span { font-size: 0.75rem; color: var(--text-sub); font-weight: 500; }
 
     /* ADMIN DASHBOARD */
     #adminDashboard { display: none; }
@@ -70,12 +141,69 @@
 </head>
 <body>
 
+  <!-- LOGIN SCREEN -->
   <div id="loginScreen">
     <div class="login-box">
+      <!-- Close Button -->
+      <button class="login-close-btn" onclick="closeLogin()">&#x2715;</button>
+      
       <h2>Admin Login</h2>
       <input type="password" id="adminPwd" placeholder="Enter Password" onkeypress="handleEnter(event)" />
-      <label class="checkbox-container"><input type="checkbox" id="savePwd" /> Keep me logged in</label>
+      
+      <!-- Checkbox Left Aligned -->
+      <label class="checkbox-container">
+        <input type="checkbox" id="savePwd" /> Keep me logged in
+      </label>
+      
       <button class="login-btn" onclick="verifyLogin()">Login &rarr;</button>
+
+      <!-- Contact Admin Section -->
+      <div class="contact-section">
+        <div class="contact-header">Contact Admin</div>
+        <div class="contact-buttons">
+          
+          <!-- Call -->
+          <span onclick="window.location.href='tel:+918210660831'" class="dev-action-btn">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24">
+                <path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H7.5z"/>
+              </svg>
+            </div>
+            <span>Call</span>
+          </span>
+
+          <!-- Message -->
+          <span onclick="window.location.href='sms:+918210660831'" class="dev-action-btn">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+              </svg>
+            </div>
+            <span>Message</span>
+          </span>
+
+          <!-- Email -->
+          <span onclick="window.location.href='mailto:info@hindustanrubber.com'" class="dev-action-btn">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </div>
+            <span>Email</span>
+          </span>
+
+          <!-- WhatsApp -->
+          <span onclick="window.location.href='https://wa.me/918210660831'" class="dev-action-btn">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
+            <span>WhatsApp</span>
+          </span>
+
+        </div>
+      </div>
     </div>
   </div>
 
@@ -103,7 +231,6 @@
             </select>
           </div>
           <div>
-            <!-- Changed to Input for Unit Weight -->
             <label>Unit Wt.(Kg)</label>
             <input type="number" step="0.01" id="newUnitWt" placeholder="e.g. 35" required />
           </div>
@@ -139,7 +266,14 @@
         document.getElementById("adminDashboard").style.display = "block";
       }
     };
+    
+    // Close button logic
+    function closeLogin() {
+      window.location.href = 'index.html';
+    }
+
     function handleEnter(e) { if (e.key === "Enter") verifyLogin(); }
+    
     function verifyLogin() {
       const pwd = document.getElementById("adminPwd").value;
       if (pwd === CORRECT_PWD) {
