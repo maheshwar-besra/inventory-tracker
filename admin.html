@@ -60,23 +60,6 @@
       position: relative; /* For absolute positioning of close button */
     }
 
-    .login-close-btn {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: transparent;
-      border: none;
-      color: var(--text-sub);
-      font-size: 1.5rem;
-      cursor: pointer;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: 0.2s;
-    }
     
     /* 1. Round Circle Close Button */
     .login-close-btn {
@@ -97,6 +80,9 @@
       border-radius: 50%; /* Ensures it is a perfect circle */
       transition: 0.2s;
     }
+      
+    .login-btn { width: 100%; padding: 14px; border: none; border-radius: 8px; background: var(--accent); color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; }
+
     .login-box h2 { margin-bottom: 24px; font-weight: 800; margin-top: 8px; }
     .login-box input[type="password"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 16px; outline: none; }
     .login-box input[type="password"]:focus { border-color: var(--accent); }
