@@ -18,299 +18,73 @@
       --input-bg: #09090b;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100dvh; display: flex; flex-direction: column; }
+    .container { max-width: 800px; margin: 0 auto; padding: 24px 20px; width: 100%; }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-    }
+    /* LOGIN SCREEN */
+    #loginScreen { position: fixed; inset: 0; background-color: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+    .login-box { background: var(--surface); border: 1px solid var(--border); padding: 32px 24px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; }
+    .login-box h2 { margin-bottom: 24px; font-weight: 800; }
+    .login-box input[type="password"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 16px; outline: none; }
+    .login-box input[type="password"]:focus { border-color: var(--accent); }
+    .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; color: var(--text-sub); font-size: 0.9rem; cursor: pointer; justify-content: center; }
+    .login-btn { width: 100%; padding: 14px; border: none; border-radius: 8px; background: var(--accent); color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 24px 20px;
-      width: 100%;
-    }
-
-    /* --- LOGIN SCREEN --- */
-    #loginScreen {
-      position: fixed;
-      inset: 0;
-      background-color: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 20px;
-    }
-
-    .login-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 32px 24px;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    .login-box h2 {
-      margin-bottom: 24px;
-      font-weight: 800;
-    }
-
-    .login-box input[type="password"] {
-      width: 100%;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--input-bg);
-      color: var(--text-main);
-      font-size: 1rem;
-      margin-bottom: 16px;
-      outline: none;
-    }
-
-    .login-box input[type="password"]:focus {
-      border-color: var(--accent);
-    }
-
-    .checkbox-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 24px;
-      color: var(--text-sub);
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .login-btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: var(--accent);
-      color: #000;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* --- ADMIN DASHBOARD --- */
-    #adminDashboard {
-      display: none; /* Hidden until logged in */
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 16px;
-    }
-
-    header h1 {
-      font-size: 1.3rem;
-      font-weight: 800;
-    }
-
-    .nav-link {
-      color: var(--text-sub);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      background: var(--surface);
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 24px;
-    }
-
-    .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      color: var(--accent);
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-    }
-
-    /* Form Elements */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    @media(min-width: 600px) {
-      .form-grid { grid-template-columns: 1fr 1fr; }
-      .form-grid .full-width { grid-column: span 2; }
-    }
-
-    label {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      margin-bottom: 4px;
-      display: block;
-      font-weight: 600;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--input-bg);
-      color: var(--text-main);
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    input:focus, select:focus {
-      border-color: var(--accent);
-    }
-
-    input[readonly] {
-      background: var(--surface-elevated);
-      color: var(--text-sub);
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #000;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 8px;
-    }
-
-    /* Update List Section */
-    .update-controls {
-      margin-bottom: 16px;
-    }
-
-    .item-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .item-card {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-    }
-
-    .item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .item-name {
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-
-    .item-qty {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--accent);
-    }
-
-    .action-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .action-input {
-      flex: 1;
-      padding: 10px;
-      font-size: 1rem;
-      text-align: center;
-    }
-
-    .btn-add, .btn-issue {
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      flex: 1;
-    }
-
+    /* ADMIN DASHBOARD */
+    #adminDashboard { display: none; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    header h1 { font-size: 1.3rem; font-weight: 800; }
+    .nav-link { color: var(--text-sub); text-decoration: none; font-size: 0.85rem; font-weight: 600; background: var(--surface); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
+    
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 24px; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--accent); font-weight: 700; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media(min-width: 600px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid .full-width { grid-column: span 2; } }
+    
+    label { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; display: block; font-weight: 600; }
+    input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 0.95rem; outline: none; }
+    input:focus, select:focus { border-color: var(--accent); }
+    
+    .btn-primary { background: var(--accent); color: #000; border: none; padding: 14px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 8px; }
+    
+    .update-controls { margin-bottom: 16px; }
+    .item-list { display: flex; flex-direction: column; gap: 12px; }
+    .item-card { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .item-name { font-size: 1.05rem; font-weight: 700; display: block;}
+    .item-specs { font-size: 0.8rem; color: var(--text-sub); margin-top: 4px; }
+    .item-qty { font-size: 1.1rem; font-weight: 800; color: var(--accent); text-align: right; }
+    
+    .action-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+    .action-input { flex: 1; padding: 10px; font-size: 1rem; text-align: center; }
+    .btn-add, .btn-issue { border: none; padding: 10px 16px; border-radius: 8px; font-weight: 700; color: #fff; cursor: pointer; flex: 1; }
     .btn-add { background: var(--success); }
     .btn-issue { background: var(--danger); }
-    
-    .btn-delete {
-      background: transparent;
-      border: none;
-      color: var(--text-sub);
-      font-size: 0.8rem;
-      margin-top: 12px;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 24px;
-      color: var(--text-sub);
-      font-size: 0.9rem;
-    }
+    .btn-delete { background: transparent; border: none; color: var(--text-sub); font-size: 0.8rem; margin-top: 12px; text-decoration: underline; cursor: pointer; }
+    .empty-state { text-align: center; padding: 24px; color: var(--text-sub); font-size: 0.9rem; }
   </style>
-
-  <!-- Firebase App and Realtime Database SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
-  <!-- LOGIN SCREEN -->
   <div id="loginScreen">
     <div class="login-box">
       <h2>Admin Login</h2>
       <input type="password" id="adminPwd" placeholder="Enter Password" onkeypress="handleEnter(event)" />
-      <label class="checkbox-container">
-        <input type="checkbox" id="savePwd" /> Keep me logged in
-      </label>
+      <label class="checkbox-container"><input type="checkbox" id="savePwd" /> Keep me logged in</label>
       <button class="login-btn" onclick="verifyLogin()">Login &rarr;</button>
     </div>
   </div>
 
-  <!-- ADMIN DASHBOARD -->
   <div class="container" id="adminDashboard">
     <header>
       <h1>Control Panel</h1>
       <a href="index.html" class="nav-link">&larr; User View</a>
     </header>
 
-    <!-- SECTION 1: ADD NEW STOCK ITEM -->
     <div class="card">
       <h3>+ Add New Stock Item</h3>
       <form id="addItemForm" onsubmit="handleAddItem(event)">
@@ -329,22 +103,21 @@
             </select>
           </div>
           <div>
-            <label>Unit</label>
-            <input type="text" id="newUnit" value="Kg" readonly />
+            <!-- Changed to Input for Unit Weight -->
+            <label>Unit Wt.(Kg)</label>
+            <input type="number" step="0.01" id="newUnitWt" placeholder="e.g. 35" required />
           </div>
           <div class="full-width">
             <label>Initial Quantity</label>
-            <input type="number" id="newQty" placeholder="Enter qty in Kg" min="0" required />
+            <input type="number" id="newQty" placeholder="Enter qty count" min="0" required />
           </div>
         </div>
         <button type="submit" class="btn-primary">Save New Item</button>
       </form>
     </div>
 
-    <!-- SECTION 2: UPDATE STOCK (FILTER BY CATEGORY) -->
     <div class="card">
       <h3>&#x21C4; Update Existing Stock</h3>
-      
       <div class="update-controls">
         <label>Select Category to View Items</label>
         <select id="filterCategory" onchange="renderUpdateList()">
@@ -354,47 +127,28 @@
           <option value="Oil">Oil</option>
         </select>
       </div>
-
-      <div class="item-list" id="updateListContainer">
-        <!-- Dynamic Items will appear here -->
-      </div>
+      <div class="item-list" id="updateListContainer"></div>
     </div>
   </div>
 
   <script>
-    // --- AUTHENTICATION LOGIC ---
     const CORRECT_PWD = "admin123m";
-    
-    // Check saved login on page load
     window.onload = () => {
-      const savedPwd = localStorage.getItem("hrp_admin_pwd");
-      if (savedPwd === CORRECT_PWD) {
+      if (localStorage.getItem("hrp_admin_pwd") === CORRECT_PWD) {
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("adminDashboard").style.display = "block";
       }
     };
-
-    function handleEnter(e) {
-      if (e.key === "Enter") verifyLogin();
-    }
-
+    function handleEnter(e) { if (e.key === "Enter") verifyLogin(); }
     function verifyLogin() {
       const pwd = document.getElementById("adminPwd").value;
-      const save = document.getElementById("savePwd").checked;
-      
       if (pwd === CORRECT_PWD) {
-        if (save) {
-          localStorage.setItem("hrp_admin_pwd", pwd);
-        }
+        if (document.getElementById("savePwd").checked) localStorage.setItem("hrp_admin_pwd", pwd);
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("adminDashboard").style.display = "block";
-      } else {
-        alert("Incorrect Password!");
-      }
+      } else { alert("Incorrect Password!"); }
     }
 
-
-    // --- FIREBASE CONFIGURATION ---
     const firebaseConfig = {
       apiKey: "AIzaSyBkMiak1gDsTaP22FBMYmTh7kwHnne1NIM",
       authDomain: "inventory-tracker-a6d75.firebaseapp.com",
@@ -404,81 +158,55 @@
       messagingSenderId: "498199087966",
       appId: "1:498199087966:web:e5d1d6454343d384091dcf"
     };
-
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    
     let allInventory = {};
 
-    // Listen for Realtime Updates
     db.ref("inventory").on("value", (snapshot) => {
       allInventory = snapshot.val() || {};
-      renderUpdateList(); // Refresh list automatically when data changes
+      renderUpdateList();
     });
 
-
-    // --- ADD NEW ITEM LOGIC ---
     function handleAddItem(e) {
       e.preventDefault();
-      
       const name = document.getElementById("newName").value.trim();
       const category = document.getElementById("newCategory").value;
+      const unitWt = parseFloat(document.getElementById("newUnitWt").value);
       const qty = parseInt(document.getElementById("newQty").value, 10);
-      const unit = "Kg"; // Hardcoded to Kg as per requirements
 
-      // Check if item already exists in the selected category
-      const exists = Object.values(allInventory).some(item => 
-        item.name.toLowerCase() === name.toLowerCase() && 
-        item.category === category
-      );
+      const exists = Object.values(allInventory).some(item => item.name.toLowerCase() === name.toLowerCase() && item.category === category);
+      if (exists) { alert("This item already exists in the selected category!"); return; }
 
-      if (exists) {
-        alert("This item already exists in the selected category!");
-        return;
-      }
-
-      // Push to Firebase Database
-      db.ref("inventory").push({
-        name: name,
-        category: category,
-        qty: qty,
-        unit: unit
-      }).then(() => {
-        alert("Item added successfully!");
+      db.ref("inventory").push({ name, category, unitWt, qty }).then(() => {
         document.getElementById("addItemForm").reset();
-        // Reset category dropdown visually to the one just added
         document.getElementById("filterCategory").value = category;
         renderUpdateList();
-      }).catch((err) => alert("Error: " + err.message));
+      }).catch(err => alert("Error: " + err.message));
     }
 
-
-    // --- UPDATE EXISTING STOCK LOGIC ---
     function renderUpdateList() {
       const container = document.getElementById("updateListContainer");
       const selectedCat = document.getElementById("filterCategory").value;
       container.innerHTML = "";
 
-      // Filter items by category
       const items = Object.entries(allInventory).filter(([key, item]) => item.category === selectedCat);
+      if (items.length === 0) { container.innerHTML = `<div class="empty-state">No items found in ${selectedCat}.</div>`; return; }
 
-      if (items.length === 0) {
-        container.innerHTML = `<div class="empty-state">No items found in ${selectedCat} category.</div>`;
-        return;
-      }
-
-      // Build cards for each item
       items.forEach(([key, item]) => {
         const card = document.createElement("div");
         card.className = "item-card";
+        const unitWt = item.unitWt || 0;
         
         card.innerHTML = `
           <div class="item-header">
-            <div class="item-name">${item.name}</div>
-            <div class="item-qty">${item.qty} ${item.unit}</div>
+            <div>
+              <span class="item-name">${item.name}</span>
+              <div class="item-specs">Unit Wt: ${unitWt} Kg</div>
+            </div>
+            <div class="item-qty">Qty: ${item.qty}</div>
           </div>
           <div class="action-row">
-            <input type="number" id="adj_${key}" class="action-input" placeholder="Amount (Kg)" min="1" />
+            <input type="number" id="adj_${key}" class="action-input" placeholder="Qty Amount" min="1" />
             <button class="btn-add" onclick="adjustStock('${key}', 'add')">+ Add</button>
             <button class="btn-issue" onclick="adjustStock('${key}', 'issue')">- Issue</button>
           </div>
@@ -491,35 +219,21 @@
     function adjustStock(key, action) {
       const inputEl = document.getElementById(`adj_${key}`);
       const amount = parseInt(inputEl.value, 10);
-      
-      if (isNaN(amount) || amount <= 0) {
-        alert("Please enter a valid amount greater than 0.");
-        return;
-      }
+      if (isNaN(amount) || amount <= 0) { alert("Enter a valid qty amount greater than 0."); return; }
 
       const item = allInventory[key];
       let newQty = item.qty;
 
-      if (action === 'add') {
-        newQty += amount;
-      } else if (action === 'issue') {
-        if (amount > item.qty) {
-          alert("Error: Cannot issue more than current stock available!");
-          return;
-        }
+      if (action === 'add') { newQty += amount; } 
+      else if (action === 'issue') {
+        if (amount > item.qty) { alert("Cannot issue more than current stock!"); return; }
         newQty -= amount;
       }
-
-      // Update Database
-      db.ref("inventory/" + key).update({ qty: newQty }).then(() => {
-        inputEl.value = ""; // clear input field
-      });
+      db.ref("inventory/" + key).update({ qty: newQty }).then(() => { inputEl.value = ""; });
     }
 
     function deleteItem(key, name) {
-      if (confirm(`WARNING: Are you sure you want to permanently delete "${name}" from the database?`)) {
-        db.ref("inventory/" + key).remove();
-      }
+      if (confirm(`WARNING: Permanently delete "${name}"?`)) db.ref("inventory/" + key).remove();
     }
   </script>
 </body>
