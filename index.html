@@ -319,9 +319,9 @@
       const totalWt = item.qty * unitWt;
 
       document.getElementById('histName').innerText = item.name;
-      document.getElementById('histDetail').innerText = `Unit Wt: ${unitWt} Kg`;
-      document.getElementById('histQty').innerText = `Qty: ${item.qty}`;
-      document.getElementById('histTotal').innerText = `Total: ${totalWt}`;
+      document.getElementById('histDetail').innerText = `Unit Wt. : ${unitWt} Kg`;
+      document.getElementById('histQty').innerText = `Current Qty: ${item.qty}`;
+      document.getElementById('histTotal').innerText = `Total Wt.(Kg) : ${totalWt}`;
 
       const tbody = document.getElementById("historyTableBody");
       tbody.innerHTML = "";
