@@ -252,7 +252,7 @@
   <div class="container" id="adminDashboard">
     <header>
       <h1>Control Panel</h1>
-      <a href="index.html" class="nav-link">&larr; User View</a>
+     <a href="javascript:void(0)" onclick="window.location.replace('index.html')" class="nav-link">&larr; User View</a>
     </header>
 
     <div class="card">
@@ -310,9 +310,9 @@
     };
     
     // Close button logic
-    function closeLogin() {
-      window.location.href = 'index.html';
-    }
+   function closeLogin() {
+  window.location.replace('index.html');
+}
 
     function handleEnter(e) { if (e.key === "Enter") verifyLogin(); }
     
