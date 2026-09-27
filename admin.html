@@ -43,7 +43,7 @@
 
   /* LOGIN SCREEN */
   #loginScreen { position: fixed; inset: 0; background-color: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-  .login-box { background: var(--surface); border: 1px solid var(--border); padding: 26px 24px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; position: relative; }
+  .login-box { background: var(--surface); border: 1px solid var(--border); padding: 24px 26px 24px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; position: relative; }
     .login-close-btn { 
     position: absolute; 
     bottom: -60px; /* Pushes it outside the bottom of the box */
@@ -64,7 +64,7 @@
     transition: 0.2s; 
   }
   .login-close-btn:hover { background: var(--border); color: var(--text-main); }
-  .login-box h2 { margin-bottom: 24px; font-weight: 800; margin-top: 5px; }
+  .login-box h2 { margin-bottom: 24px; font-weight: 800; margin-top: 0px; }
   .login-box input[type="password"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 16px; outline: none; }
   .login-box input[type="password"]:focus { border-color: var(--accent); }
   .checkbox-container { display: flex; align-items: center; justify-content: flex-start; gap: 8px; margin-bottom: 24px; color: var(--text-sub); font-size: 0.9rem; cursor: pointer; width: 100%; }
