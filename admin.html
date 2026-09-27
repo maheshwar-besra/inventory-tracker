@@ -17,30 +17,35 @@
       --danger: #ef4444;
       --input-bg: #09090b;
     }
+    
   /* Base Reset */
   * {
     -webkit-tap-highlight-color: transparent;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
-  
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-   html, body{touch-action: none; /* Prevents pull-to-refresh and bounce gestures */
+  html, body {
+    /* SCROLL FIX: touch-action: none; removed to allow scrolling */
     -webkit-text-size-adjust: none !important;
     text-size-adjust: none !important;
     -moz-text-size-adjust: none !important;
     -ms-text-size-adjust: none !important;
-     user-select: none !important;
+    user-select: none !important;
     -webkit-user-select: none !important;
     -ms-user-select: none !important;
     -moz-user-select: none !important;
     -webkit-touch-callout: none !important;
     caret-color: transparent !important;
+    background-color: var(--bg); 
+    color: var(--text-main); 
+    min-height: 100dvh; 
+    display: flex; 
+    flex-direction: column; 
   }
-    body { background-color: var(--bg); color: var(--text-main); min-height: 100dvh; display: flex; flex-direction: column; }
+  
     .container { max-width: 800px; margin: 0 auto; padding: 24px 20px; width: 100%; }
 
     /* LOGIN SCREEN */
@@ -54,17 +59,16 @@
       width: 100%; 
       max-width: 400px; 
       text-align: center; 
-      position: relative; /* For absolute positioning of close button */
+      position: relative; 
     }
 
-    
     /* 1. Round Circle Close Button */
     .login-close-btn {
       position: absolute;
       top: 14px;
       right: 14px;
-      background: var(--surface-elevated); /* Adds a visible background */
-      border: 1px solid var(--border); /* Adds the circle ring */
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
       color: var(--text-sub);
       font-size: 1.1rem;
       font-weight: bold;
@@ -74,7 +78,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 50%; /* Ensures it is a perfect circle */
+      border-radius: 50%;
       transition: 0.2s;
     }
       
@@ -84,7 +88,7 @@
     .login-box input[type="password"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text-main); font-size: 1rem; margin-bottom: 16px; outline: none; }
     .login-box input[type="password"]:focus { border-color: var(--accent); }
     
-        .checkbox-container { 
+    .checkbox-container { 
       display: flex; 
       align-items: center; 
       justify-content: flex-start; 
@@ -93,23 +97,25 @@
       color: var(--text-sub); 
       font-size: 0.9rem; 
       cursor: pointer; 
-      width: 100%; /* Forces container to take full width and align left */
+      width: 100%; 
     }
 
     .checkbox-container input[type="checkbox"] {
-      margin: 0; /* Removes default browser spacing */
+      margin: 0; 
       width: 16px;
       height: 16px;
-      accent-color: var(--accent); /* Matches your OLED theme */
+      accent-color: var(--accent); 
       cursor: pointer;
     }
 
-   .login-close-btn:hover { 
+    .login-close-btn:hover { 
       background: var(--border); 
       color: var(--text-main); 
     }
+    
     /* CONTACT SECTION IN LOGIN */
     .contact-section { margin-top: 28px; border-top: 1px solid var(--border); padding-top: 20px; }
+    
     /* 2. Contact Admin with Dashes on Both Sides */
     .contact-header { 
       font-size: 0.8rem; 
@@ -130,7 +136,9 @@
       height: 1px; 
       width: 40px; 
       background-color: var(--border); 
-    }.contact-buttons { display: flex; justify-content: space-around; align-items: center; padding: 0 10px; }
+    }
+    
+    .contact-buttons { display: flex; justify-content: space-around; align-items: center; padding: 0 10px; }
     .dev-action-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; }
     .icon-circle { width: 48px; height: 48px; border-radius: 50%; background: #20242a; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
     .dev-action-btn:active .icon-circle { background: #2d333b; }
