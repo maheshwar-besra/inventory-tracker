@@ -520,6 +520,12 @@
   window.addEventListener('online', () => { offlineBanner.style.display = 'none'; });
   if (!navigator.onLine) { offlineBanner.style.display = 'block'; }
   </script>
+    <script>
+    // Disable the Copy/Paste context menu on long-press
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+    </script>
   
 </body>
 </html>
