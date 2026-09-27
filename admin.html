@@ -57,19 +57,25 @@
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
-  html, body,input, textarea {
-    touch-action: none;
-    -webkit-text-size-adjust: none !important;
-    text-size-adjust: none !important;
-    user-select: none !important;
-    -webkit-user-select: none !important;
+  html, body {
     background-color: var(--bg); 
     color: var(--text-main); 
     min-height: 100dvh; 
     display: flex; 
     flex-direction: column; 
   }
-
+ /* Disable selection, autofill, long press */
+    input, textarea, html,body{
+     touch-action: none;
+    -webkit-text-size-adjust: none !important;
+    text-size-adjust: none !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      -ms-user-select: none !important;
+      -moz-user-select: none !important;
+      -webkit-touch-callout: none !important;
+      caret-color: transparent !important;
+    }
   .container { max-width: 800px; margin: 0 auto; padding: 24px 20px; width: 100%; }
     
   
