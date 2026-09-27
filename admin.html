@@ -58,6 +58,11 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   html, body {
+    touch-action: none;
+    -webkit-text-size-adjust: none !important;
+    text-size-adjust: none !important;
+      user-select: none !important;
+      -webkit-user-select: none !important;
     background-color: var(--bg); 
     color: var(--text-main); 
     min-height: 100dvh; 
@@ -65,7 +70,7 @@
     flex-direction: column; 
   }
  /* Disable selection, autofill, long press */
-    input, textarea, html,body{
+    input, textarea{
      touch-action: none;
     -webkit-text-size-adjust: none !important;
     text-size-adjust: none !important;
