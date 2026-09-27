@@ -178,7 +178,11 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
-
+<!-- Offline Warning Banner -->
+<div id="offlineBanner" style="display: none; background-color: #ef4444; color: #ffffff; text-align: center; padding: 8px 10px; font-size: 0.8rem; font-weight: 700; width: 100%; position: fixed; top: 0; left: 0; z-index: 9999; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+  &#x26A0; No Internet Connection - Viewing Offline Data
+</div>
+  
   <!-- LOGIN SCREEN -->
   <div id="loginScreen">
     <div class="login-box">
@@ -408,5 +412,24 @@
       if (confirm(`WARNING: Permanently delete "${name}"?`)) db.ref("inventory/" + key).remove();
     }
   </script>
+  <script>
+  const offlineBanner = document.getElementById('offlineBanner');
+
+  // Show banner when internet disconnects
+  window.addEventListener('offline', () => {
+    offlineBanner.style.display = 'block';
+  });
+
+  // Hide banner when internet reconnects
+  window.addEventListener('online', () => {
+    offlineBanner.style.display = 'none';
+  });
+
+  // Check initial state immediately on load
+  if (!navigator.onLine) {
+    offlineBanner.style.display = 'block';
+  }
+  </script>
+  
 </body>
 </html>
