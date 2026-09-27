@@ -70,17 +70,14 @@
     flex-direction: column; 
   }
  /* Disable selection, autofill, long press */
-    input, textarea{
-     touch-action: none;
-    -webkit-text-size-adjust: none !important;
-    text-size-adjust: none !important;
-      user-select: none !important;
-      -webkit-user-select: none !important;
-      -ms-user-select: none !important;
-      -moz-user-select: none !important;
-      -webkit-touch-callout: none !important;
-      caret-color: transparent !important;
-    }
+      input, textarea {
+    -webkit-touch-callout: none !important; /* Hides the popup menu */
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    /* Removed touch-action so you can still scroll! */
+    /* Removed caret-color so you can still see your typing cursor! */
+  }
+
   .container { max-width: 800px; margin: 0 auto; padding: 24px 20px; width: 100%; }
     
   
@@ -535,6 +532,12 @@
   window.addEventListener('online', () => { offlineBanner.style.display = 'none'; });
   if (!navigator.onLine) { offlineBanner.style.display = 'block'; }
   </script>
+    <script>
+    // Disable the Copy/Paste context menu on long-press
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+    </script>
   
 </body>
 </html>
