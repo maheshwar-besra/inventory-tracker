@@ -50,25 +50,25 @@
     .theme-toggle:active { transform: scale(0.9); }
     .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     
-    * {
+   * {
     -webkit-tap-highlight-color: transparent;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
+
+  /* THIS IS THE MISSING BLOCK */
   html, body {
-    touch-action: none;
     -webkit-text-size-adjust: none !important;
     text-size-adjust: none !important;
-      user-select: none !important;
-      -webkit-user-select: none !important;
     background-color: var(--bg); 
     color: var(--text-main); 
     min-height: 100dvh; 
     display: flex; 
     flex-direction: column; 
   }
+
   .container { max-width: 800px; margin: 0 auto; padding: 24px 20px; width: 100%; }
 
   /* LOGIN SCREEN */
@@ -520,12 +520,6 @@
   window.addEventListener('online', () => { offlineBanner.style.display = 'none'; });
   if (!navigator.onLine) { offlineBanner.style.display = 'block'; }
   </script>
-    <script>
-    // Disable the Copy/Paste context menu on long-press
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-    });
-    </script>
   
 </body>
 </html>
