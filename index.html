@@ -25,87 +25,93 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
   }
-
-  *::-webkit-scrollbar {
-    display: none; /* Hide scrollbars for Safari and Chrome */
-  }
+  *::-webkit-scrollbar { display: none; }
   
-   html, body{
-    touch-action: none; /* Prevents pull-to-refresh and bounce gestures on User Dashboard */
+  html, body{
+    touch-action: none;
     -webkit-text-size-adjust: none !important;
     text-size-adjust: none !important;
-    -moz-text-size-adjust: none !important;
-    -ms-text-size-adjust: none !important;
     user-select: none !important;
     -webkit-user-select: none !important;
-    -ms-user-select: none !important;
-    -moz-user-select: none !important;
-    -webkit-touch-callout: none !important;
-    caret-color: transparent !important;         
     width: 100%; 
     height: 100dvh; 
     overflow: hidden; 
     background-color: var(--bg); 
     color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   
-    .app-container { display: flex; flex-direction: column; height: 100dvh; max-width: 600px; margin: 0 auto; padding: 6vh 20px 24px; justify-content: space-between; }
-    
-    header { text-align: center; padding-bottom: 20px; }
-    h1 { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em; color: var(--text-main); line-height: 1.3; margin-bottom: 8px; }
-    .subtitle { font-size: 0.95rem; color: var(--text-highlight); font-weight: 800; letter-spacing: 0.05em; }
-    
-    .main-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-    .section-label { text-align: center; font-size: 0.85rem; font-weight: 800; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; gap: 12px; }
-    .section-label::before, .section-label::after { content: ""; height: 1px; width: 40px; background-color: var(--border); }
-    
-    .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; align-content: center; justify-items: center; }
-    .category-card { width: 100%; max-width: 170px; aspect-ratio: 1 / 1; border-radius: 16px; background-color: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; padding: 16px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-    .category-card:active { transform: scale(0.96); background-color: var(--surface-elevated); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-    .icon-wrapper { width: 52px; height: 52px; border-radius: 12px; background: var(--surface-elevated); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid var(--border); }
-    .icon-wrapper svg { width: 26px; height: 26px; }
-    .cat-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
-    .cat-desc { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; }
-    
-    footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border); }
-    .status-badge { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 700; letter-spacing: 0.05em; }
-    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .admin-link { font-size: 0.8rem; color: var(--text-highlight); text-decoration: none; font-weight: 700; padding: 8px 14px; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
-    
-    .sheet-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 100; opacity: 0; transition: opacity 0.25s ease; }
-    .sheet-overlay.active { display: flex; opacity: 1; }
-    .sheet { width: 100%; max-width: 600px; margin: 0 auto; background: #09090b; border-radius: 24px 24px 0 0; border: 1px solid var(--border); border-bottom: none; max-height: 80dvh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-    .sheet-overlay.active .sheet { transform: translateY(0); }
-    .sheet-handle { width: 36px; height: 5px; background: var(--border); border-radius: 4px; margin: 14px auto; }
-    .sheet-header { padding: 4px 20px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-    .sheet-title { font-size: 1.2rem; font-weight: 800; color: var(--text-main); }
-    .close-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--text-main); font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    
-    .sheet-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 24px; }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { position: sticky; top: 0; background: #09090b; padding: 14px 16px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-sub); border-bottom: 1px solid var(--border); z-index: 2; }
-    td { padding: 16px; border-bottom: 1px solid var(--surface-elevated); vertical-align: middle; }
-    .item-name { font-weight: 700; color: var(--text-main); font-size: 0.95rem; display: block; margin-bottom: 2px; }
-    .item-detail { font-size: 0.75rem; color: var(--text-sub); }
-    .item-qty { font-weight: 800; font-size: 1rem; color: var(--text-main); }
-    .item-total { font-weight: 800; color: var(--accent); font-size: 1rem; }
-    .empty-state { padding: 40px 20px; text-align: center; color: var(--text-sub); font-size: 0.95rem; font-weight: 600; }
-    
-    /* Status Dots */
-    .status-indicator { display: inline-flex; align-items: center; justify-content: center; width: 12px; height: 12px; border-radius: 50%; }
-    .status-green { background: var(--success); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
-    .status-yellow { background: var(--warning); box-shadow: 0 0 8px rgba(234, 179, 8, 0.4); }
-    .status-red { background: var(--danger); box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+  .app-container { display: flex; flex-direction: column; height: 100dvh; max-width: 600px; margin: 0 auto; padding: 6vh 20px 24px; justify-content: space-between; }
+  header { text-align: center; padding-bottom: 20px; }
+  h1 { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em; color: var(--text-main); line-height: 1.3; margin-bottom: 8px; }
+  .subtitle { font-size: 0.95rem; color: var(--text-highlight); font-weight: 800; letter-spacing: 0.05em; }
+  
+  .main-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .section-label { text-align: center; font-size: 0.85rem; font-weight: 800; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .section-label::before, .section-label::after { content: ""; height: 1px; width: 40px; background-color: var(--border); }
+  
+  .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; align-content: center; justify-items: center; }
+  .category-card { width: 100%; max-width: 170px; aspect-ratio: 1 / 1; border-radius: 16px; background-color: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; padding: 16px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  .category-card:active { transform: scale(0.96); background-color: var(--surface-elevated); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+  .icon-wrapper { width: 52px; height: 52px; border-radius: 12px; background: var(--surface-elevated); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid var(--border); }
+  .icon-wrapper svg { width: 26px; height: 26px; }
+  .cat-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
+  .cat-desc { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; }
+  
+  footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border); }
+  .status-badge { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-sub); font-weight: 700; letter-spacing: 0.05em; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .admin-link { font-size: 0.8rem; color: var(--text-highlight); text-decoration: none; font-weight: 700; padding: 8px 14px; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+  
+  /* Modal / Bottom Sheet */
+  .sheet-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 100; opacity: 0; transition: opacity 0.25s ease; }
+  .sheet-overlay.active { display: flex; opacity: 1; }
+  .sheet { width: 100%; max-width: 600px; margin: 0 auto; background: #09090b; border-radius: 24px 24px 0 0; border: 1px solid var(--border); border-bottom: none; max-height: 85dvh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .sheet-overlay.active .sheet { transform: translateY(0); }
+  .sheet-handle { width: 36px; height: 5px; background: var(--border); border-radius: 4px; margin: 14px auto; }
+  .sheet-header { padding: 4px 20px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+  .sheet-title { font-size: 1.2rem; font-weight: 800; color: var(--text-main); }
+  .close-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--text-main); font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  
+  .sheet-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 24px; position: relative; }
+  
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; text-align: left; }
+  th { position: sticky; top: 0; background: #09090b; padding: 14px 16px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-sub); border-bottom: 1px solid var(--border); z-index: 2; }
+  td { padding: 16px; border-bottom: 1px solid var(--surface-elevated); vertical-align: middle; }
+  .clickable-row { cursor: pointer; transition: background 0.2s; }
+  .clickable-row:active { background: var(--surface-elevated); }
+  
+  .item-name { font-weight: 700; color: var(--text-main); font-size: 0.95rem; display: block; margin-bottom: 2px; }
+  .item-detail { font-size: 0.75rem; color: var(--text-sub); }
+  .item-qty { font-weight: 800; font-size: 1rem; color: var(--text-main); }
+  .item-total { font-weight: 800; color: var(--accent); font-size: 1rem; }
+  .empty-state { padding: 40px 20px; text-align: center; color: var(--text-sub); font-size: 0.95rem; font-weight: 600; }
+  
+  /* Status Dots */
+  .status-indicator { display: inline-flex; align-items: center; justify-content: center; width: 12px; height: 12px; border-radius: 50%; }
+  .status-green { background: var(--success); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+  .status-yellow { background: var(--warning); box-shadow: 0 0 8px rgba(234, 179, 8, 0.4); }
+  .status-red { background: var(--danger); box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+
+  /* History View Elements */
+  #historyPanel { display: none; }
+  .back-link { font-size: 0.85rem; color: var(--accent); font-weight: 700; padding: 12px 20px; display: inline-block; cursor: pointer; }
+  .history-header { padding: 0 20px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .hist-add { color: var(--success); font-weight: 700; }
+  .hist-issue { color: var(--danger); font-weight: 700; }
+  .hist-date { font-size: 0.75rem; color: var(--text-sub); display: block; margin-top: 4px; }
+  .hist-supplier { font-size: 0.8rem; color: var(--text-highlight); display: block; }
   </style>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
-  <!-- Offline Warning Banner -->
+<!-- Offline Warning Banner -->
 <div id="offlineBanner" style="display: none; background-color: #ef4444; color: #ffffff; text-align: center; padding: 8px 10px; font-size: 0.8rem; font-weight: 700; width: 100%; position: fixed; top: 0; left: 0; z-index: 9999; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
   &#x26A0; No Internet Connection - Viewing Offline Data
 </div>
@@ -169,19 +175,50 @@
         <div class="sheet-title" id="sheetTitle">Category Stock</div>
         <button type="button" class="close-btn" onclick="closeSheetDirect()">&#x2715;</button>
       </div>
+      
       <div class="sheet-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Material</th>
-              <th>Qty</th>
-              <th>Total Wt.(Kg)</th>
-              <th style="text-align: center;">Status</th>
-            </tr>
-          </thead>
-          <tbody id="sheetTableBody"></tbody>
-        </table>
-        <div id="noItemsMessage" class="empty-state">No stock available.</div>
+        
+        <!-- Category List View -->
+        <div id="categoryPanel">
+          <table>
+            <thead>
+              <tr>
+                <th>Material</th>
+                <th>Qty</th>
+                <th>Total Wt.(Kg)</th>
+                <th style="text-align: center;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="sheetTableBody"></tbody>
+          </table>
+          <div id="noItemsMessage" class="empty-state">No stock available.</div>
+        </div>
+
+        <!-- Single Item History View -->
+        <div id="historyPanel">
+          <div class="back-link" onclick="showCategoryList()">&#x2190; Back to List</div>
+          <div class="history-header">
+            <div>
+              <div class="item-name" id="histName">Item Name</div>
+              <div class="item-detail" id="histDetail">Unit Wt: 0 Kg</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="item-qty" id="histQty">Qty: 0</div>
+              <div class="item-total" id="histTotal">Total: 0</div>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Supplier</th>
+                <th style="text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody"></tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>
@@ -204,16 +241,25 @@
 
     db.ref("inventory").on("value", (snapshot) => {
       allInventory = snapshot.val() || {};
-      if (activeCategory) renderTableData(activeCategory);
+      if (activeCategory && document.getElementById('categoryPanel').style.display !== 'none') {
+        renderTableData(activeCategory);
+      }
     });
 
     function openCategorySheet(categoryName) {
       activeCategory = categoryName;
       document.getElementById("sheetTitle").innerText = categoryName + " Stock";
+      showCategoryList();
       renderTableData(categoryName);
+      
       const overlay = document.getElementById("sheetOverlay");
       overlay.style.display = "flex";
       setTimeout(() => overlay.classList.add("active"), 10);
+    }
+
+    function showCategoryList() {
+      document.getElementById('historyPanel').style.display = 'none';
+      document.getElementById('categoryPanel').style.display = 'block';
     }
 
     function renderTableData(categoryName) {
@@ -221,7 +267,7 @@
       const noItems = document.getElementById("noItemsMessage");
       tbody.innerHTML = "";
 
-      const items = Object.values(allInventory).filter(item => (item.category || "").trim().toLowerCase() === categoryName.toLowerCase());
+      const items = Object.entries(allInventory).filter(([key, item]) => (item.category || "").trim().toLowerCase() === categoryName.toLowerCase());
 
       if (items.length === 0) {
         noItems.style.display = "block";
@@ -229,7 +275,7 @@
       }
       noItems.style.display = "none";
 
-      items.forEach(item => {
+      items.forEach(([key, item]) => {
         const qty = item.qty || 0;
         const unitWt = item.unitWt || 0;
         const totalWt = qty * unitWt;
@@ -237,7 +283,6 @@
         let statusClass = "status-green";
         const cat = categoryName.toLowerCase();
         
-        // Status Logic
         if (cat === "polymer" || cat === "filler") {
           if (qty < 5) statusClass = "status-red";
           else if (qty < 10) statusClass = "status-yellow";
@@ -247,6 +292,9 @@
         }
 
         const row = document.createElement("tr");
+        row.className = "clickable-row";
+        // Click to open history ledger
+        row.onclick = () => openItemHistory(key);
         row.innerHTML = `
           <td>
             <span class="item-name">${item.name || "-"}</span>
@@ -260,6 +308,49 @@
       });
     }
 
+    function openItemHistory(key) {
+      const item = allInventory[key];
+      if(!item) return;
+
+      document.getElementById('categoryPanel').style.display = 'none';
+      document.getElementById('historyPanel').style.display = 'block';
+
+      const unitWt = item.unitWt || 0;
+      const totalWt = item.qty * unitWt;
+
+      document.getElementById('histName').innerText = item.name;
+      document.getElementById('histDetail').innerText = `Unit Wt: ${unitWt} Kg`;
+      document.getElementById('histQty').innerText = `Qty: ${item.qty}`;
+      document.getElementById('histTotal').innerText = `Total: ${totalWt}`;
+
+      const tbody = document.getElementById("historyTableBody");
+      tbody.innerHTML = "";
+
+      const historyObj = item.history || {};
+      const historyArr = Object.values(historyObj).sort((a, b) => b.timestamp - a.timestamp); // Newest first
+
+      if (historyArr.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" class="empty-state">No transactions recorded.</td></tr>`;
+        return;
+      }
+
+      historyArr.forEach(record => {
+        const isAdd = record.type === 'add';
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>
+            <span class="${isAdd ? 'hist-add' : 'hist-issue'}">${isAdd ? '+ ADDED' : '- ISSUED'}</span>
+            <span class="hist-date">${record.date || 'Unknown Date'}</span>
+          </td>
+          <td>
+            <span class="hist-supplier">${isAdd ? (record.supplier || 'N/A') : '--'}</span>
+          </td>
+          <td style="text-align: right;" class="item-qty">${record.amount}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
     function closeSheetDirect() {
       const overlay = document.getElementById("sheetOverlay");
       overlay.classList.remove("active");
@@ -267,24 +358,13 @@
     }
     function closeSheet(event) { if (event.target.id === "sheetOverlay") closeSheetDirect(); }
   </script>
+  
   <script>
   const offlineBanner = document.getElementById('offlineBanner');
-
-  // Show banner when internet disconnects
-  window.addEventListener('offline', () => {
-    offlineBanner.style.display = 'block';
-  });
-
-  // Hide banner when internet reconnects
-  window.addEventListener('online', () => {
-    offlineBanner.style.display = 'none';
-  });
-
-  // Check initial state immediately on load
-  if (!navigator.onLine) {
-    offlineBanner.style.display = 'block';
-  }
-</script>
+  window.addEventListener('offline', () => { offlineBanner.style.display = 'block'; });
+  window.addEventListener('online', () => { offlineBanner.style.display = 'none'; });
+  if (!navigator.onLine) { offlineBanner.style.display = 'block'; }
+  </script>
 
 </body>
 </html>
