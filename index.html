@@ -22,6 +22,39 @@
       --warning: #eab308;
       --danger: #ef4444;
     }
+        /* Light Mode Variables */
+    html[data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-elevated: #f1f5f9;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --text-highlight: #334155;
+    }
+
+    /* Footer adjustments for centering */
+    footer { position: relative; } /* Ensures the absolute button centers correctly */
+    
+    .theme-toggle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .theme-toggle:active { transform: translateX(-50%) scale(0.9); }
+    .theme-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    
   /* Base Reset */
   * {
     -webkit-tap-highlight-color: transparent;
@@ -73,7 +106,7 @@
   /* Modal / Bottom Sheet */
   .sheet-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 100; opacity: 0; transition: opacity 0.25s ease; }
   .sheet-overlay.active { display: flex; opacity: 1; }
-  .sheet { width: 100%; max-width: 600px; margin: 0 auto; background: #09090b; border-radius: 24px 24px 0 0; border: 1px solid var(--border); border-bottom: none; max-height: 85dvh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .sheet { width: 100%; max-width: 600px; margin: 0 auto; background: var(--bg); border-radius: 24px 24px 0 0; border: 1px solid var(--border); border-bottom: none; max-height: 85dvh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
   .sheet-overlay.active .sheet { transform: translateY(0); }
   .sheet-handle { width: 36px; height: 5px; background: var(--border); border-radius: 4px; margin: 14px auto; }
   .sheet-header { padding: 4px 20px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
@@ -84,7 +117,7 @@
   
   /* Tables */
   table { width: 100%; border-collapse: collapse; text-align: left; }
-  th { position: sticky; top: 0; background: #09090b; padding: 14px 16px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-sub); border-bottom: 1px solid var(--border); z-index: 2; }
+  th { position: sticky; top: 0; background: var(--bg); padding: 14px 16px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-sub); border-bottom: 1px solid var(--border); z-index: 2; }
   td { padding: 16px; border-bottom: 1px solid var(--surface-elevated); vertical-align: middle; }
   .clickable-row { cursor: pointer; transition: background 0.2s; }
   .clickable-row:active { background: var(--surface-elevated); }
@@ -165,8 +198,17 @@
         </div>
       </div>
     </div>
-    <footer>
+        <footer>
       <div class="status-badge"><span class="live-dot"></span><span>Live Sync</span></div>
+      
+      <!-- Center Theme Toggle Button -->
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+        <svg id="themeIcon" viewBox="0 0 24 24">
+          <!-- Default Moon Icon -->
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
       <a href="javascript:void(0)" onclick="window.location.replace('admin.html')" class="admin-link">Admin &rarr;</a>
     </footer>
   </div>
@@ -368,6 +410,40 @@
   window.addEventListener('online', () => { offlineBanner.style.display = 'none'; });
   if (!navigator.onLine) { offlineBanner.style.display = 'block'; }
   </script>
+  <script>
+    // Theme Toggle Logic
+    const themeIcon = document.getElementById('themeIcon');
+    const currentTheme = localStorage.getItem('appTheme') || 'dark';
 
+    // Apply saved theme on load
+    if (currentTheme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      setSunIcon();
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isLight = html.getAttribute('data-theme') === 'light';
+      
+      if (isLight) {
+        html.removeAttribute('data-theme');
+        localStorage.setItem('appTheme', 'dark');
+        setMoonIcon();
+      } else {
+        html.setAttribute('data-theme', 'light');
+        localStorage.setItem('appTheme', 'light');
+        setSunIcon();
+      }
+    }
+
+    // SVG Icon updates
+    function setSunIcon() {
+      themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+    }
+    function setMoonIcon() {
+      themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+    }
+  </script>
+  
 </body>
 </html>
