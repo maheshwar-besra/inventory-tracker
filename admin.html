@@ -73,15 +73,22 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
-  html, body {
-    -webkit-text-size-adjust: none !important;
-    text-size-adjust: none !important;
-    background-color: var(--bg); 
-    color: var(--text-main); 
-    min-height: 100dvh; 
-    display: flex; 
-    flex-direction: column; 
+    /* Aggressively Hide All Scrollbars */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    -webkit-appearance: none !important;
   }
+  
+  html, body, * {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE and Edge */
+  }
+
   
   .container { max-width: 800px; margin: 0 auto; padding: 24px 20px; width: 100%; }
 
