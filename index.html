@@ -319,9 +319,9 @@
       const totalWt = item.qty * unitWt;
 
       document.getElementById('histName').innerText = item.name;
-      document.getElementById('histDetail').innerText = `Unit Wt. - ${unitWt} Kg`;
-      document.getElementById('histQty').innerText = `Current Qty. - ${item.qty}`;
-      document.getElementById('histTotal').innerText = `Total Wt.(Kg) - ${totalWt}`;
+      document.getElementById('histDetail').innerText = `Unit Wt. : ${unitWt} Kg`;
+      document.getElementById('histQty').innerText = `Current Qty. : ${item.qty}`;
+      document.getElementById('histTotal').innerText = `Total Wt.(Kg) : ${totalWt}`;
 
       const tbody = document.getElementById("historyTableBody");
       tbody.innerHTML = "";
@@ -345,7 +345,7 @@
           <td>
             <span class="hist-supplier">${isAdd ? (record.supplier || 'N/A') : '--'}</span>
           </td>
-          <td style="text-align: center;" class="item-qty">${record.amount}</td>
+          <td style="text-align: right;" class="item-qty">${record.amount} </td>
         `;
         tbody.appendChild(row);
       });
