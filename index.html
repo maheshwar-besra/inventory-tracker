@@ -89,11 +89,13 @@
   .section-label { text-align: center; font-size: 0.85rem; font-weight: 800; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; gap: 12px; }
   .section-label::before, .section-label::after { content: ""; height: 1px; width: 40px; background-color: var(--border); }
   
-  .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; align-content: center; justify-items: center; }
-  .category-card { width: 100%; max-width: 170px; aspect-ratio: 1 / 1; border-radius: 16px; background-color: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; padding: 16px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-  .category-card:active { transform: scale(0.96); background-color: var(--surface-elevated); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-  .icon-wrapper { width: 52px; height: 52px; border-radius: 12px; background: var(--surface-elevated); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid var(--border); }
-  .icon-wrapper svg { width: 26px; height: 26px; }
+     .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; align-content: center; justify-items: center; }
+    
+    .category-card { width: 100%; max-width: 170px; padding: 12px 10px; min-height: 105px; border-radius: 16px; background-color: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .category-card:active { transform: scale(0.96); background-color: var(--surface-elevated); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+    
+    .icon-wrapper { width: 44px; height: 44px; border-radius: 12px; background: var(--surface-elevated); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid var(--border); }
+    .icon-wrapper svg { width: 22px; height: 22px; }
   .cat-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
   .cat-desc { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; }
   
@@ -196,6 +198,27 @@
           </div>
           <div class="cat-title">Oil</div><div class="cat-desc">Processing Oils</div>
         </div>
+                <!-- Adhesive -->
+        <div class="category-card" onclick="openCategorySheet('Adhesive')">
+          <div class="icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+            </svg>
+          </div>
+          <div class="cat-title">Adhesive</div><div class="cat-desc">Chemlock & Desmodur</div>
+        </div>
+        <!-- Consumable -->
+        <div class="category-card" onclick="openCategorySheet('Consumable')">
+          <div class="icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <div class="cat-title">Consumable</div><div class="cat-desc">Hardware & Tools</div>
+        </div>
+        
       </div>
     </div>
         <footer>
@@ -328,13 +351,14 @@
         let statusClass = "status-green";
         const cat = categoryName.toLowerCase();
         
-        if (cat === "polymer" || cat === "filler") {
+                if (cat === "polymer" || cat === "filler") {
           if (qty < 5) statusClass = "status-red";
           else if (qty < 10) statusClass = "status-yellow";
-        } else if (cat === "chemical" || cat === "oil") {
+        } else if (cat === "chemical" || cat === "oil" || cat === "adhesive" || cat === "consumable") {
           if (qty <= 0) statusClass = "status-red";
           else if (qty === 1) statusClass = "status-yellow";
         }
+
 
         const row = document.createElement("tr");
         row.className = "clickable-row";
